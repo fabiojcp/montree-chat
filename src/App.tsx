@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from "react";
 import styled from "styled-components";
-import ChatWindow from "./components/ChatWindow";
-import useChat from "./hooks/useChat";
+import { Chat } from "./components/Chat";
 
 const AppContainer = styled.div`
   display: flex;
@@ -64,7 +63,6 @@ function getNameFromStorage(): string {
 export default function App() {
   const [username, setUsername] = useState(getNameFromStorage);
   const [nameInput, setNameInput] = useState(getNameFromStorage);
-  const { messages, loading, typingAuthor, sendMessage } = useChat(username);
 
   const handleSetName = (e: FormEvent) => {
     e.preventDefault();
@@ -94,13 +92,11 @@ export default function App() {
 
   return (
     <AppContainer>
-      <ChatWindow
-        messages={messages}
-        loading={loading}
-        currentUser={username}
-        typingAuthor={typingAuthor}
-        onSend={sendMessage}
-      />
+      <Chat currentUser={username}>
+        <Chat.Header>Mini Chat</Chat.Header>
+        <Chat.Messages />
+        <Chat.Input />
+      </Chat>
     </AppContainer>
   );
 }

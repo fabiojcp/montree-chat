@@ -1,13 +1,7 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
-import MessageItem from "./MessageItem";
-import type { Message } from "../api";
-
-interface MessageListProps {
-  messages: Message[];
-  currentUser: string;
-  typingAuthor: string | null;
-}
+import MessageItem from "../MessageItem";
+import { useChatContext } from "./context";
 
 const Container = styled.div`
   flex: 1;
@@ -24,16 +18,28 @@ const TypingIndicator = styled.div`
   padding: 8px 16px;
 `;
 
-export default function MessageList({
-  messages,
-  currentUser,
-  typingAuthor,
-}: MessageListProps) {
+const LoadingText = styled.p`
+  text-align: center;
+  color: #999;
+  padding: 40px;
+  font-size: 14px;
+`;
+
+export function ChatMessages() {
+  const { messages, loading, currentUser, typingAuthor } = useChatContext();
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typingAuthor]);
+
+  if (loading) {
+    return (
+      <Container>
+        <LoadingText>Carregando mensagens...</LoadingText>
+      </Container>
+    );
+  }
 
   return (
     <Container>
