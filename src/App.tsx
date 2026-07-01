@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import styled from "styled-components";
 import ChatWindow from "./components/ChatWindow";
 import useChat from "./hooks/useChat";
@@ -53,7 +53,7 @@ const NameButton = styled.button`
   }
 `;
 
-function getNameFromStorage() {
+function getNameFromStorage(): string {
   try {
     return localStorage.getItem("chat-username") || "";
   } catch {
@@ -66,7 +66,7 @@ export default function App() {
   const [nameInput, setNameInput] = useState(getNameFromStorage);
   const { messages, loading, typingAuthor, sendMessage } = useChat(username);
 
-  const handleSetName = (e) => {
+  const handleSetName = (e: FormEvent) => {
     e.preventDefault();
     const trimmed = nameInput.trim();
     if (!trimmed) return;

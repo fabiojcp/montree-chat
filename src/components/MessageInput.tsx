@@ -1,5 +1,9 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import styled from "styled-components";
+
+interface MessageInputProps {
+  onSend: (text: string) => void;
+}
 
 const Form = styled.form`
   display: flex;
@@ -44,10 +48,10 @@ const SendButton = styled.button`
   }
 `;
 
-export default function MessageInput({ onSend }) {
+export default function MessageInput({ onSend }: MessageInputProps) {
   const [text, setText] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!text.trim()) return;
     onSend(text.trim());

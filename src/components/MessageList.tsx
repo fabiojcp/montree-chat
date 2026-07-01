@@ -1,6 +1,13 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import MessageItem from "./MessageItem";
+import type { Message } from "../api";
+
+interface MessageListProps {
+  messages: Message[];
+  currentUser: string;
+  typingAuthor: string | null;
+}
 
 const Container = styled.div`
   flex: 1;
@@ -17,8 +24,12 @@ const TypingIndicator = styled.div`
   padding: 8px 16px;
 `;
 
-export default function MessageList({ messages, currentUser, typingAuthor }) {
-  const bottomRef = useRef(null);
+export default function MessageList({
+  messages,
+  currentUser,
+  typingAuthor,
+}: MessageListProps) {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

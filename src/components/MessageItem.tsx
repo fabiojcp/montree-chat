@@ -1,13 +1,19 @@
 import styled from "styled-components";
+import type { Message } from "../api";
 
-const Wrapper = styled.div`
+interface MessageItemProps {
+  message: Message;
+  isMine: boolean;
+}
+
+const Wrapper = styled.div<{ $isMine: boolean }>`
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
   align-items: ${({ $isMine }) => ($isMine ? "flex-end" : "flex-start")};
 `;
 
-const Author = styled.span`
+const Author = styled.span<{ $isMine: boolean }>`
   font-size: 12px;
   font-weight: 600;
   color: ${({ $isMine }) => ($isMine ? "#4caf50" : "#2196f3")};
@@ -15,7 +21,7 @@ const Author = styled.span`
   padding: 0 4px;
 `;
 
-const Bubble = styled.div`
+const Bubble = styled.div<{ $isMine: boolean }>`
   max-width: 70%;
   padding: 10px 16px;
   border-radius: 18px;
@@ -28,7 +34,7 @@ const Bubble = styled.div`
   border-bottom-left-radius: ${({ $isMine }) => ($isMine ? "18px" : "4px")};
 `;
 
-export default function MessageItem({ message, isMine }) {
+export default function MessageItem({ message, isMine }: MessageItemProps) {
   const displayAuthor = isMine ? "Você" : message.author;
 
   return (

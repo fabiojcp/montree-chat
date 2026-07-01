@@ -1,6 +1,15 @@
 import styled from "styled-components";
 import MessageList from "./MessageList";
 import MessageInput from "./MessageInput";
+import type { Message } from "../api";
+
+interface ChatWindowProps {
+  messages: Message[];
+  loading: boolean;
+  currentUser: string;
+  typingAuthor: string | null;
+  onSend: (text: string) => void;
+}
 
 const Container = styled.div`
   display: flex;
@@ -36,7 +45,7 @@ export default function ChatWindow({
   currentUser,
   typingAuthor,
   onSend,
-}) {
+}: ChatWindowProps) {
   return (
     <Container>
       <Header>Mini Chat</Header>
