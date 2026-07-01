@@ -1,0 +1,40 @@
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  align-items: ${({ $isMine }) => ($isMine ? "flex-end" : "flex-start")};
+`;
+
+const Author = styled.span`
+  font-size: 12px;
+  font-weight: 600;
+  color: ${({ $isMine }) => ($isMine ? "#4caf50" : "#2196f3")};
+  margin-bottom: 4px;
+  padding: 0 4px;
+`;
+
+const Bubble = styled.div`
+  max-width: 70%;
+  padding: 10px 16px;
+  border-radius: 18px;
+  background: ${({ $isMine }) => ($isMine ? "#e8f5e9" : "#f5f5f5")};
+  color: #333;
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  border-bottom-right-radius: ${({ $isMine }) => ($isMine ? "4px" : "18px")};
+  border-bottom-left-radius: ${({ $isMine }) => ($isMine ? "18px" : "4px")};
+`;
+
+export default function MessageItem({ message, isMine }) {
+  const displayAuthor = isMine ? "Você" : message.author;
+
+  return (
+    <Wrapper $isMine={isMine}>
+      <Author $isMine={isMine}>{displayAuthor}</Author>
+      <Bubble $isMine={isMine}>{message.text}</Bubble>
+    </Wrapper>
+  );
+}
