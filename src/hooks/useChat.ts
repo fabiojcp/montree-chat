@@ -1,9 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import {
-  fetchMessages,
-  sendMessage as apiSendMessage,
-  getSimulatedMessage,
-} from "../api";
+import { apiClient, getNextSimulated } from "../api";
 import type { Message } from "../api";
 
 const SIMULATED_INTERVAL = 5000;
@@ -24,26 +20,32 @@ export default function useChat(currentUser: string): UseChatReturn {
   const typingTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    fetchMessages().then((msgs) => {
-      setMessages(msgs);
+    apiClient.get<Message[]>("/messages").then(({ data }) => {
+      setMessages(data);
       setLoading(false);
     });
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const message = getSimulatedMessage(simulatedIndex.current);
-      if (!message) {
+      const payload = getNextSimulated(simulatedIndex.current);
+      if (!payload) {
         clearInterval(interval);
         return;
       }
 
-      setTypingAuthor(message.author);
+      setTypingAuthor(payload.author);
 
-      typingTimer.current = setTimeout(() => {
+      typingTimer.current = setTimeout(async () => {
         setTypingAuthor(null);
-        setMessages((prev) => [...prev, message]);
-        simulatedIndex.current += 1;
+
+        try {
+          const { data } = await apiClient.post<Message>("/messages", payload);
+          setMessages((prev) => [...prev, data]);
+          simulatedIndex.current += 1;
+        } catch {
+          simulatedIndex.current += 1;
+        }
       }, TYPING_DURATION);
     }, SIMULATED_INTERVAL);
 
@@ -55,8 +57,11 @@ export default function useChat(currentUser: string): UseChatReturn {
 
   const sendMessage = useCallback(
     async (text: string) => {
-      const message = await apiSendMessage({ author: currentUser, text });
-      setMessages((prev) => [...prev, message]);
+      const { data } = await apiClient.post<Message>("/messages", {
+        author: currentUser,
+        text,
+      });
+      setMessages((prev) => [...prev, data]);
     },
     [currentUser],
   );
