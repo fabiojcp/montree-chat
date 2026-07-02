@@ -217,6 +217,8 @@ export default function App() {
             onClick={() => setActiveTab("chat")}
           >
             Chat
+            <br />
+            <span style={{ fontSize: 10, fontWeight: 400 }}>respostas automáticas</span>
           </Tab>
           <Tab
             $active={activeTab === "pokemon"}
