@@ -33,11 +33,12 @@ Preocupação com performance e acessibilidade desde o início. Contraste de cor
 ### Chat em Grupo Simulado
 - 3 mensagens iniciais carregadas via mock de API (300ms de latência simulada)
 - Envio de mensagens com `POST /messages`
-- **Respostas automáticas interativas**: ao digitar "oi", "?", "bom dia", "obrigado", etc., um dos usuários simulados responde em ~2.5s usando o seu nome
+- **Respostas automáticas interativas**: 14 padrões de reconhecimento ("oi", "?", "bom dia", "obrigado", "kkkk", "triste", "feliz" etc.) — um dos usuários simulados responde em ~2.5s usando o seu nome
 - Simulação de mensagens em tempo real de outros usuários a cada 5 segundos (conversa paralela entre João, Maria, Ana e Carlos)
 - Indicador "está digitando..." com 2 segundos de antecedência
 - Rolagem automática para a mensagem mais recente
 - Mensagens de "Você" alinhadas à direita (verde), outros usuários à esquerda (azul)
+- Sanitização de input (strip tags HTML) e limite de 500 caracteres
 
 ### Árvore de Decisão Pokémon
 - Chat conversacional estilo WhatsApp para escolher um Pokémon
@@ -51,6 +52,15 @@ Preocupação com performance e acessibilidade desde o início. Contraste de cor
 - Chave da API nunca exposta ao frontend (proxy seguro)
 - Mensagens de erro contextuais (401, 429, 500, rede)
 - Sistema de prompt configurável
+- Sanitização de input e limite de 2000 caracteres
+
+## Segurança
+
+- **Sanitização de input** (`src/utils/sanitize.ts`): remoção de tags HTML, trim e limite de caracteres em todas as entradas de texto
+- **Rate limiting** (`src/hooks/useRateLimit.ts`): bloqueio de envios com intervalo inferior a 1 segundo, evitando flooding
+- **CSP headers**: `Content-Security-Policy` restringindo conexões apenas a `'self'`, `openrouter.ai` e `pokeapi.co`
+- **Sem exposição de secrets**: chave da API OpenRouter isolada no proxy/Functions, nunca no bundle
+- **Sem prompt injection externa**: o system prompt do agente IA é fixo no hook, nunca sobrescrito pelo input do usuário
 
 ## Arquitetura
 
@@ -131,8 +141,11 @@ src/
 │   └── AgentChat/         # Chat com IA
 │       └── AgentChat.tsx  # UI + estado da conversa
 ├── hooks/
-│   ├── useChat.ts         # Hook do chat em grupo simulado
-│   └── useAgentChat.ts    # Hook do chat com IA
+│   ├── useChat.ts         # Hook do chat em grupo simulado + auto-replies
+│   ├── useAgentChat.ts    # Hook do chat com IA
+│   └── useRateLimit.ts    # Rate limiting (1s entre envios)
+├── utils/
+│   └── sanitize.ts        # Sanitização de input (strip tags, trim, limite)
 ├── App.tsx                # App raiz: login + 3 abas
 ├── main.tsx               # Entry point + setup dos mocks
 └── index.css              # Reset CSS global

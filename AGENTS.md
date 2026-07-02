@@ -61,7 +61,20 @@ functions/
 
 ## Mock API
 
-O módulo `src/api/mocks.ts` usa `axios-mock-adapter` com 300ms de delay. Intercepta GET/POST em `/messages`. Os dados são mantidos em memória (resetam ao recarregar a página). O hook `useChat` gerencia setInterval (5s) que simula mensagens de outros usuários.
+O módulo `src/api/mocks.ts` usa `axios-mock-adapter` com 300ms de delay. Intercepta GET/POST em `/messages`. Os dados são mantidos em memória (resetam ao recarregar a página).
+
+O hook `useChat` gerencia dois mecanismos de simulação:
+- **setInterval (5s)**: mensagens espontâneas de João, Maria, Ana e Carlos (conversa de fundo)
+- **Auto-replies**: após o usuário enviar uma mensagem, o hook analisa o texto com 14 padrões de regex ("oi", "?", "bom dia", "obrigado", "kkkk", "triste", "feliz" etc.) e um usuário aleatório responde em ~4.5s usando o nome do usuário atual
+
+## Segurança
+
+- **`src/utils/sanitize.ts`**: `sanitizeInput(text, maxLength)` — strip tags HTML, trim, corte no limite
+- **`src/hooks/useRateLimit.ts`**: `useRateLimit(ms)` — bloqueia envios com intervalo inferior ao definido
+- **CSP**: meta tag em `index.html` restringe `connect-src` a `'self'`, `openrouter.ai` e `pokeapi.co`
+- **ChatInput**: limite de 500 caracteres + rate limit 1s
+- **AgentChat**: limite de 2000 caracteres + rate limit 1s
+- **System prompt do agente IA**: fixo em `src/hooks/useAgentChat.ts`, nunca recebe input do usuário
 
 ## PokéAPI
 
