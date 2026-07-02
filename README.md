@@ -1,5 +1,5 @@
 # Infos do projeto:
-- Tarefe teste mini chat
+- Tarefa teste mini chat
 - Autor: Fábio Casanova Penteado
 
 # Mini Chat
