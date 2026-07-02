@@ -1,6 +1,7 @@
 # Infos do projeto:
 - Tarefa teste mini chat
 - Autor: Fábio Casanova Penteado
+- Deploy: https://montree-chat.pages.dev/
 
 # Mini Chat
 
