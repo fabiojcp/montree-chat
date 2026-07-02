@@ -16,7 +16,7 @@ const Wrapper = styled.div<{ $isMine: boolean }>`
 const Author = styled.span<{ $isMine: boolean }>`
   font-size: 12px;
   font-weight: 600;
-  color: ${({ $isMine }) => ($isMine ? "#4caf50" : "#2196f3")};
+  color: ${({ $isMine }) => ($isMine ? "#2e7d32" : "#1565c0")};
   margin-bottom: 4px;
   padding: 0 4px;
 `;

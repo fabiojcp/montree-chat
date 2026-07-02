@@ -20,7 +20,7 @@ const Input = styled.input`
   transition: border-color 0.2s;
 
   &:focus {
-    border-color: #4caf50;
+    border-color: #2e7d32;
   }
 `;
 
@@ -28,7 +28,7 @@ const SendButton = styled.button`
   padding: 10px 20px;
   border: none;
   border-radius: 24px;
-  background: #4caf50;
+  background: #2e7d32;
   color: #fff;
   font-size: 14px;
   font-weight: 600;
@@ -36,7 +36,7 @@ const SendButton = styled.button`
   transition: background 0.2s;
 
   &:hover {
-    background: #43a047;
+    background: #1b5e20;
   }
 
   &:disabled {

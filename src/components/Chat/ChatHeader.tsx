@@ -7,7 +7,7 @@ export interface ChatHeaderProps {
 
 const Header = styled.header`
   padding: 16px;
-  background: #4caf50;
+  background: #2e7d32;
   color: #fff;
   text-align: center;
   font-size: 18px;

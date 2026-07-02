@@ -65,7 +65,7 @@ const OptionChip = styled.button<{ $color?: string }>`
   padding: 8px 16px;
   border: none;
   border-radius: 20px;
-  background: ${({ $color }) => $color || "#4caf50"};
+  background: ${({ $color }) => $color || "#2e7d32"};
   color: #fff;
   font-size: 13px;
   font-weight: 600;
@@ -162,14 +162,14 @@ const ConfirmButton = styled.button`
   padding: 10px 28px;
   border: none;
   border-radius: 20px;
-  background: #4caf50;
+  background: #2e7d32;
   color: #fff;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
 
   &:hover {
-    background: #43a047;
+    background: #1b5e20;
   }
 `;
 
@@ -343,7 +343,7 @@ export default function WizardChat({ onSelectPokemon }: PokemonPickerProps) {
             {SIZE_RANGES.map((size) => (
               <OptionChip
                 key={size.key}
-                $color="#2196f3"
+                $color="#1976d2"
                 onClick={() => handleSizeClick(size.key)}
               >
                 {size.label}
@@ -417,7 +417,8 @@ export default function WizardChat({ onSelectPokemon }: PokemonPickerProps) {
                 style={{
                   border: "none",
                   background: "none",
-                  color: "#4caf50",
+                   color: "#2e7d32",
+
                   cursor: "pointer",
                   fontWeight: 700,
                   textDecoration: "underline",

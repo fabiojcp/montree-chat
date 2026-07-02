@@ -45,9 +45,9 @@ const Tab = styled.button<{ $active: boolean }>`
   flex: 1;
   padding: 14px 16px;
   border: none;
-  border-bottom: 3px solid ${({ $active }) => ($active ? "#4caf50" : "transparent")};
+  border-bottom: 3px solid ${({ $active }) => ($active ? "#2e7d32" : "transparent")};
   background: ${({ $active }) => ($active ? "#fff" : "#f9f9f9")};
-  color: ${({ $active }) => ($active ? "#4caf50" : "#666")};
+  color: ${({ $active }) => ($active ? "#2e7d32" : "#666")};
   font-size: 14px;
   font-weight: ${({ $active }) => ($active ? 700 : 500)};
   cursor: pointer;
@@ -80,7 +80,7 @@ const NameInput = styled.input`
   text-align: center;
 
   &:focus {
-    border-color: #4caf50;
+    border-color: #2e7d32;
   }
 `;
 
@@ -88,14 +88,14 @@ const NameButton = styled.button`
   padding: 10px 32px;
   border: none;
   border-radius: 24px;
-  background: #4caf50;
+  background: #2e7d32;
   color: #fff;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 
   &:hover {
-    background: #43a047;
+    background: #1b5e20;
   }
 `;
 
@@ -123,7 +123,7 @@ const PokemonBadgeName = styled.span`
 
 const ChatHeader = styled.header`
   padding: 12px 16px;
-  background: #4caf50;
+  background: #2e7d32;
   color: #fff;
   text-align: center;
   font-size: 16px;
@@ -192,7 +192,7 @@ export default function App() {
 
   if (!username) {
     return (
-      <AppContainer>
+      <AppContainer as="main">
         <NameForm onSubmit={handleSetName}>
           <h2>Bem-vindo ao Mini Chat</h2>
           <NameInput
@@ -209,7 +209,7 @@ export default function App() {
   }
 
   return (
-    <AppContainer>
+    <AppContainer as="main">
       <ContentWrapper>
         <TabBar>
           <Tab
