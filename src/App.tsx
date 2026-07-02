@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import styled from "styled-components";
 import { Chat } from "./components/Chat";
 import { WizardChat } from "./components/WizardChat";
+import { AgentChat } from "./components/AgentChat";
 import type { PokemonDetail } from "./api/pokemon";
 
 const AppContainer = styled.div`
@@ -157,7 +158,7 @@ function getPokemonFromStorage(): {
   }
 }
 
-type TabId = "chat" | "pokemon";
+type TabId = "chat" | "pokemon" | "agent";
 
 export default function App() {
   const [username, setUsername] = useState(getNameFromStorage);
@@ -222,6 +223,14 @@ export default function App() {
             onClick={() => setActiveTab("pokemon")}
           >
             Pokémon
+            <br />
+            <span style={{ fontSize: 10, fontWeight: 400 }}>árvore de escolha</span>
+          </Tab>
+          <Tab
+            $active={activeTab === "agent"}
+            onClick={() => setActiveTab("agent")}
+          >
+            IA
           </Tab>
         </TabBar>
 
@@ -234,7 +243,7 @@ export default function App() {
           </PokemonBadge>
         )}
 
-        {activeTab === "chat" ? (
+        {activeTab === "chat" && (
           <>
             <ChatHeader>Mini Chat</ChatHeader>
             <ChatBody>
@@ -244,9 +253,17 @@ export default function App() {
               </Chat>
             </ChatBody>
           </>
-        ) : (
+        )}
+
+        {activeTab === "pokemon" && (
           <ChatBody>
             <WizardChat onSelectPokemon={handleSelectPokemon} />
+          </ChatBody>
+        )}
+
+        {activeTab === "agent" && (
+          <ChatBody>
+            <AgentChat />
           </ChatBody>
         )}
       </ContentWrapper>
