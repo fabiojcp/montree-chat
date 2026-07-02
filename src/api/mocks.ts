@@ -8,15 +8,6 @@ const initialMessages: Message[] = [
   { id: 3, author: "João", text: "Tudo ótimo! E com você?" },
 ];
 
-const simulatedMessages: Omit<Message, "id">[] = [
-  { author: "Ana", text: "Que legal esse chat!" },
-  { author: "Carlos", text: "Bom dia a todos!" },
-  { author: "João", text: "Alguém viu o jogo ontem?" },
-  { author: "Maria", text: "Sim, foi incrível!" },
-  { author: "Ana", text: "Vamos marcar algo no fim de semana?" },
-  { author: "Carlos", text: "Eu topo!" },
-];
-
 let messages: Message[] = [...initialMessages];
 let nextId = initialMessages.length + 1;
 
@@ -31,9 +22,4 @@ export function setupMocks(): void {
     messages = [...messages, message];
     return [201, message];
   });
-}
-
-export function getNextSimulated(index: number): Omit<Message, "id"> | null {
-  if (index >= simulatedMessages.length) return null;
-  return simulatedMessages[index];
 }

@@ -33,7 +33,8 @@ Preocupação com performance e acessibilidade desde o início. Contraste de cor
 ### Chat em Grupo Simulado
 - 3 mensagens iniciais carregadas via mock de API (300ms de latência simulada)
 - Envio de mensagens com `POST /messages`
-- Simulação de mensagens em tempo real de outros usuários a cada 5 segundos
+- **Respostas automáticas interativas**: ao digitar "oi", "?", "bom dia", "obrigado", etc., um dos usuários simulados responde em ~2.5s usando o seu nome
+- Simulação de mensagens em tempo real de outros usuários a cada 5 segundos (conversa paralela entre João, Maria, Ana e Carlos)
 - Indicador "está digitando..." com 2 segundos de antecedência
 - Rolagem automática para a mensagem mais recente
 - Mensagens de "Você" alinhadas à direita (verde), outros usuários à esquerda (azul)
