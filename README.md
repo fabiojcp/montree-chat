@@ -13,6 +13,16 @@ Aplicação de chat com três abas — conversa em grupo simulada, árvore de de
 | Linter | oxlint |
 | Deploy | Cloudflare Pages |
 
+## Lighthouse
+
+Preocupação com performance e acessibilidade desde o início. Contraste de cores, landmark `<main>`, meta tags e robots.txt foram ajustados para atingir a pontuação máxima.
+
+| Performance | Accessibility | Best Practices | SEO |
+|---|---|---|---|
+| 99 | 100 | 100 | 100 |
+
+![Lighthouse](assets/lighthouse.png)
+
 ## Funcionalidades
 
 ### Chat em Grupo Simulado
