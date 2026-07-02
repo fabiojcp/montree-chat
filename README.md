@@ -1,3 +1,7 @@
+# Infos do projeto:
+Tarefe teste mini chat
+Autor: Fábio Casanova Penteado
+
 # Mini Chat
 
 Aplicação de chat com três abas — conversa em grupo simulada, árvore de decisão Pokémon via PokéAPI e chat com IA via OpenRouter. Construída como teste técnico para a vaga na Montree.
