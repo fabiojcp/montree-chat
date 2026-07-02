@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef, type FormEvent } from "react";
 import styled from "styled-components";
 import useAgentChat from "../../hooks/useAgentChat";
+import { sanitizeInput } from "../../utils/sanitize";
+import { useRateLimit } from "../../hooks/useRateLimit";
+
+const MAX_LENGTH = 2000;
 
 const Container = styled.div`
   display: flex;
@@ -120,6 +124,7 @@ const BottomRef = styled.div`
 export default function AgentChat() {
   const { messages, typing, sendMessage } = useAgentChat();
   const [text, setText] = useState("");
+  const { canSend, markSent } = useRateLimit(1000);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -128,9 +133,11 @@ export default function AgentChat() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!text.trim() || typing) return;
-    sendMessage(text.trim());
+    const cleaned = sanitizeInput(text, MAX_LENGTH);
+    if (!cleaned || typing || !canSend) return;
+    sendMessage(cleaned);
     setText("");
+    markSent();
   };
 
   return (
@@ -169,14 +176,15 @@ export default function AgentChat() {
       </Messages>
 
       <Form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          placeholder="Digite sua mensagem..."
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          disabled={typing}
-        />
-        <SendButton type="submit" disabled={!text.trim() || typing}>
+          <Input
+            type="text"
+            maxLength={MAX_LENGTH}
+            placeholder="Digite sua mensagem..."
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            disabled={typing}
+          />
+          <SendButton type="submit" disabled={!text.trim() || typing || !canSend}>
           Enviar
         </SendButton>
       </Form>

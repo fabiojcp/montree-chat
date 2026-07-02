@@ -1,6 +1,10 @@
 import { useState, type FormEvent } from "react";
 import styled from "styled-components";
 import { useChatContext } from "./context";
+import { sanitizeInput } from "../../utils/sanitize";
+import { useRateLimit } from "../../hooks/useRateLimit";
+
+const MAX_LENGTH = 500;
 
 const Form = styled.form`
   display: flex;
@@ -48,23 +52,27 @@ const SendButton = styled.button`
 export function ChatInput() {
   const { sendMessage } = useChatContext();
   const [text, setText] = useState("");
+  const { canSend, markSent } = useRateLimit(1000);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!text.trim()) return;
-    sendMessage(text.trim());
+    const cleaned = sanitizeInput(text, MAX_LENGTH);
+    if (!cleaned || !canSend) return;
+    sendMessage(cleaned);
     setText("");
+    markSent();
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       <Input
         type="text"
+        maxLength={MAX_LENGTH}
         placeholder="Digite sua mensagem..."
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <SendButton type="submit" disabled={!text.trim()}>
+      <SendButton type="submit" disabled={!text.trim() || !canSend}>
         Enviar
       </SendButton>
     </Form>
