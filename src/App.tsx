@@ -224,7 +224,7 @@ export default function App() {
           >
             Pokémon
             <br />
-            <span style={{ fontSize: 10, fontWeight: 400 }}>árvore de escolha</span>
+            <span style={{ fontSize: 10, fontWeight: 400 }}>árvore de decisão</span>
           </Tab>
           <Tab
             $active={activeTab === "agent"}
